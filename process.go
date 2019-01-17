@@ -7,6 +7,8 @@
 // are interested.
 package ps
 
+import "errors"
+
 // Process is the generic interface that is implemented on every platform
 // and provides common operations for processes.
 type Process interface {
@@ -37,4 +39,27 @@ func Processes() ([]Process, error) {
 // not found.
 func FindProcess(pid int) (Process, error) {
 	return findProcess(pid)
+}
+
+
+func ProcessByName(executable string) (p Process, err error) {
+	processes, err := Processes()
+	if err != nil {
+		return
+	}
+	for _, p := range processes {
+		if p.Executable() == executableName(executable) {
+			return p, err
+		}
+	}
+	err = errors.New("process not found")
+	return
+}
+
+func AssociatedPorts(pid int) ([]uint16, error) {
+	return associatedPorts(pid)
+}
+
+func executableName(name string) string {
+	return name
 }
