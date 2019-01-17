@@ -10,8 +10,7 @@ import (
 )
 
 func associatedPorts(pid int) (ports []uint16, err error) {
-	//cmd := fmt.Sprintf("ss -l -p -n | grep \"pid=%d,\"", pid)
-	cmd := fmt.Sprintf("lsof -p 18275 | grep LISTEN", pid)
+	cmd := fmt.Sprintf("lsof -p %d | grep LISTEN", pid)
 	out, err := exec.Command("bash", "-c", cmd).Output()
 	if err != nil {
 		return ports, fmt.Errorf("Failed to execute command: %s", err)
