@@ -41,7 +41,6 @@ func FindProcess(pid int) (Process, error) {
 	return findProcess(pid)
 }
 
-
 func ProcessByName(executable string) (p Process, err error) {
 	processes, err := Processes()
 	if err != nil {
